@@ -27,18 +27,18 @@ export const Experience = () => {
         <Fish scale={0.6} position-y={-1} />
       </MonsterStage>
       <MonsterStage
-        texture={"textures/anime_art_style_cactus_forest.jpg"}
-        name="Cactoro"
-        color="#739d3c"
+        texture={"textures/anime_art_style_lava_world.jpg"}
+        name="Dragon"
+        color="#df8d52"
         position-x={-2.5}
         rotation-y={Math.PI / 8}
       >
         <DragonEvolved scale={0.5} position-y={-1} />
       </MonsterStage>
       <MonsterStage
-        texture={"textures/anime_art_style_lava_world.jpg"}
-        name="Dragon"
-        color="#df8d52"
+        texture={"textures/anime_art_style_cactus_forest.jpg"}
+        name="Cactoro"
+        color="#739d3c"
         position-x={2.5}
         rotation-y={-Math.PI / 8}
       >
