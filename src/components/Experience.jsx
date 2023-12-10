@@ -1,4 +1,5 @@
 import {
+  CameraControls,
   Environment,
   MeshPortalMaterial,
   OrbitControls,
@@ -10,17 +11,42 @@ import * as THREE from "three";
 import { Fish } from "./Fish";
 import { DragonEvolved } from "./Dragon_Evolved";
 import { Cactoro } from "./Cactoro";
-import { useRef, useState } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useEffect, useRef, useState } from "react";
+import { useFrame, useThree } from "@react-three/fiber";
 import { easing } from "maath";
 
 export const Experience = () => {
   const [active, setActive] = useState(null);
+  const controlsRef = useRef();
+  const scene = useThree((state) => state.scene);
+
+  useEffect(() => {
+    if (active) {
+      const targetPosition = new THREE.Vector3();
+      scene.getObjectByName(active).getWorldPosition(targetPosition);
+      controlsRef.current.setLookAt(
+        0,
+        0,
+        5,
+        targetPosition.x,
+        targetPosition.y,
+        targetPosition.z,
+        true
+      );
+    } else {
+      controlsRef.current.setLookAt(0, 0, 10, 0, 0, 0, true);
+    }
+  }, [active]);
+
   return (
     <>
       <ambientLight intensity={0.5} />
       <Environment preset="sunset" />
-      <OrbitControls />
+      <CameraControls
+        ref={controlsRef}
+        maxPolarAngle={Math.PI / 2}
+        minPolarAngle={Math.PI / 6}
+      />
       <MonsterStage
         texture={
           "textures/anime_art_style_a_water_based_pokemon_like_environ.jpg"
@@ -87,6 +113,7 @@ const MonsterStage = ({
         <meshBasicMaterial color={color} toneMapped={false} />
       </Text>
       <RoundedBox
+        name={name}
         args={[2, 3, 0.1]}
         onDoubleClick={() => setActive(active === name ? null : name)}
       >
