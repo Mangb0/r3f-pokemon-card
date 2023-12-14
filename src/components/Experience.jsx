@@ -17,6 +17,7 @@ import { easing } from "maath";
 
 export const Experience = () => {
   const [active, setActive] = useState(null);
+  const [hovered, setHovered] = useState(null);
   const controlsRef = useRef();
   const scene = useThree((state) => state.scene);
 
@@ -55,8 +56,10 @@ export const Experience = () => {
         color="#38adcf"
         active={active}
         setActive={setActive}
+        hovered={hovered}
+        setHovered={setHovered}
       >
-        <Fish scale={0.6} position-y={-1} />
+        <Fish scale={0.6} position-y={-1} hovered={hovered === "Fish King"} />
       </MonsterStage>
       <MonsterStage
         texture={"textures/anime_art_style_lava_world.jpg"}
@@ -66,8 +69,14 @@ export const Experience = () => {
         rotation-y={Math.PI / 8}
         active={active}
         setActive={setActive}
+        hovered={hovered}
+        setHovered={setHovered}
       >
-        <DragonEvolved scale={0.5} position-y={-1} />
+        <DragonEvolved
+          scale={0.5}
+          position-y={-1}
+          hovered={hovered === "Dragon"}
+        />
       </MonsterStage>
       <MonsterStage
         texture={"textures/anime_art_style_cactus_forest.jpg"}
@@ -77,8 +86,10 @@ export const Experience = () => {
         rotation-y={-Math.PI / 8}
         active={active}
         setActive={setActive}
+        hovered={hovered}
+        setHovered={setHovered}
       >
-        <Cactoro scale={0.45} position-y={-1} />
+        <Cactoro scale={0.45} position-y={-1} hovered={hovered === "Cactoro"} />
       </MonsterStage>
     </>
   );
@@ -91,6 +102,8 @@ const MonsterStage = ({
   color,
   active,
   setActive,
+  hovered,
+  setHovered,
   ...props
 }) => {
   const map = useTexture(texture);
@@ -116,6 +129,8 @@ const MonsterStage = ({
         name={name}
         args={[2, 3, 0.1]}
         onDoubleClick={() => setActive(active === name ? null : name)}
+        onPointerEnter={() => setHovered(name)}
+        onPointerLeave={() => setHovered(null)}
       >
         <MeshPortalMaterial ref={portalMaterial} side={THREE.DoubleSide}>
           <ambientLight intensity={1} />
