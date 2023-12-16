@@ -5,6 +5,7 @@ import {
   OrbitControls,
   RoundedBox,
   Text,
+  useCursor,
   useTexture,
 } from "@react-three/drei";
 import * as THREE from "three";
@@ -18,6 +19,7 @@ import { easing } from "maath";
 export const Experience = () => {
   const [active, setActive] = useState(null);
   const [hovered, setHovered] = useState(null);
+  useCursor(hovered);
   const controlsRef = useRef();
   const scene = useThree((state) => state.scene);
 
